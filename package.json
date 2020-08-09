@@ -1,0 +1,44 @@
+{
+  "name": "@tmuniversal/counter",
+  "version": "0.0.1",
+  "description": "Counters that are a bit more advanced than a simple variable",
+  "main": "dist/index.js",
+  "types": "typings/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && tsc -p ./",
+    "test": "npm run lint && node test/test.js",
+    "lint": "eslint --ext .js,.ts --ignore-path .gitignore src/",
+    "lint:fix": "eslint --ext .js,.ts --ignore-path .gitignore src/ --fix",
+    "clean": "rimraf dist",
+    "preversion": "npm run build && npm test",
+    "prepublishOnly": "npm run build && npm test",
+    "postversion": "git push && git push --tags"
+  },
+  "keywords": [
+    "counter"
+  ],
+  "author": "TMUniversal",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TMUniversal/counter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TMUniversal/counter/issues"
+  },
+  "homepage": "https://github.com/TMUniversal/counter#readme",
+  "devDependencies": {
+    "@types/node": "^14.0.27",
+    "@typescript-eslint/eslint-plugin": "^3.8.0",
+    "@typescript-eslint/parser": "^3.8.0",
+    "eslint": "^7.6.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "rimraf": "^3.0.2",
+    "tsc": "^1.20150623.0",
+    "typescript": "^3.9.7"
+  }
+}
