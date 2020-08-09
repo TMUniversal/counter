@@ -53,12 +53,12 @@ console.log(testCounter.value)
 // => 1
 
 // Optional event handlers, you should provide a target event handler when passing a target value.
-testCounter.on('target', (v) => {
-  console.log(`reached ${v}`)
+testCounter.on('target', (value) => {
+  console.log(`reached ${value}`)
 })
 
-testCounter.on('change', (n, o) => {
-  console.log(`${o} => ${n}`)
+testCounter.on('change', (newValue, oldValue) => {
+  console.log(`${oldValue} => ${newValue}`)
 })
 
 testCounter.value = 5
