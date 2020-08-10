@@ -30,7 +30,7 @@
   </p>
 </div>
 
-[Counter] creates simple counters that are a bit more than a simple variable. These counters can watch for changes and alert you when a target value is reached or passed.
+[Counter] creates simple counters that are a bit more than just a variable. These counters can watch for changes and alert you when a target value is reached or passed.
 
 ## Getting Started
 
@@ -42,52 +42,88 @@ With yarn: `yarn add @tmuniversal/counter`
 
 ### Usage
 
+#### Creating a counter
+
 ```js
 const Counter = require('@tmuniversal/counter')
 
 const testCounter = new Counter(3) // Start at 3
+```
 
-const testCounter = new Counter(1, { target: 4, exactMatch: false, once: true }) // Or pass some options
+#### Working with the counter
 
-console.log(testCounter.value)
+```js
+
+const exampleCounter = new Counter(1, { target: 4, exactMatch: false, once: true }) // Or pass some options
+
+console.log(exampleCounter.value)
 // => 1
 
-// Optional event handlers, you should provide a target event handler when passing a target value.
-testCounter.on('target', (value) => {
+// The value can be set directly
+exampleCounter.value = 5
+
+// Or be changed using .increment() and .decrement()
+exampleCounter.decrement(2)
+// => 3
+
+exampleCounter.increment()
+// => 4
+
+console.log(exampleCounter.value)
+// => 4
+```
+
+A counter will provide a custom `toString()` method for easy access to the value within template strings:
+
+```js
+console.log(`The value of the counter is ${exampleCounter}`)
+// The value of the counter is 4
+```
+
+The counter will save it's latest operations, this means you can access the last change (the difference between the current and the previous value):
+
+```js
+console.log(exampleCounter.lastChange)
+// => 1
+
+exampleCounter.decrement(2)
+
+console.log(exampleCounter.lastChange)
+// => -2
+```
+
+The last five values of the counter are saved in an array, ordered from last to first. The current value is saved as the first element of the array.
+
+```js
+console.log(exampleCounter.last5)
+// => [ 2, 4, 3, 5 ]
+
+exampleCounter.increment()
+
+console.log(exampleCounter.last5)
+// => [ 3, 2, 4, 3, 5 ]
+
+exampleCounter.increment()
+
+console.log(exampleCounter.last5)
+// => [ 4, 3, 2, 4, 3 ]
+```
+
+#### Events
+
+A counter emits two kinds of events: "change", when the value of the counter changes; "target" when the counter reaches (or passes) the target option.
+
+```js
+exampleCounter.on('target', (value) => {
   console.log(`reached ${value}`)
 })
 
-testCounter.on('change', (newValue, oldValue) => {
+exampleCounter.on('change', (newValue, oldValue) => {
   console.log(`${oldValue} => ${newValue}`)
 })
-
-testCounter.value = 5
-// Changing the value will emit a "change" event.
-// Since "exactMatch" is set to false, this will emit a "target" event.
-// These will be listened to and handled as defined above.
-// Note: event listeners must be defined before handling events
-
-testCounter.decrement(2)
-// Will also trigger a "change" event, but no target event (since the value does not pass the target).
-// Note: passing the target means that the current value is equal or beyond the target value, as seen from the starting value.
-// This means it can count backwards. I'm sorry for the complicated wording.
-
-testCounter.increment()
-// Will trigger a "change" event.
-// Although this would emit a "target" event, since "once" is set to true, only one target event will ever be emitted.
-
-console.log(testCounter.value)
 ```
 
-Full console output of this snippet:
-```js
-1
-1 => 5
-reached 4
-5 => 3
-3 => 4
-4
-```
+Note: Passing the target means that the current value is equal or beyond the target value, as seen from the starting value. This means the target event can count backwards.
 
 ## Credits
 
