@@ -54,6 +54,8 @@ declare module '@tmuniversal/counter' {
      */
     public get lastChange(): number;
 
+    public toString(): string;
+
     /**
      * Listen for an event.
      * @param {"change" | "target"} event name of the event

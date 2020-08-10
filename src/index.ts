@@ -112,6 +112,10 @@ class Counter {
     return this._lastChange
   }
 
+  public toString (): string {
+    return this.value.toString()
+  }
+
   /**
    * Listen for an event.
    * @param {"change" | "target"} event name of the event
