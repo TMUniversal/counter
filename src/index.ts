@@ -97,6 +97,18 @@ class Counter {
   }
 
   /**
+   * Reset the counter
+   * @param {Boolean} toStart wether to reset to the starting value or to 0 (default: true)
+   */
+  public reset (toStart: boolean = true): number {
+    if (toStart) {
+      return (this.value = this._startValue)
+    } else {
+      return (this.value = 0)
+    }
+  }
+
+  /**
    * last five values of the counter
    * @type Number[]
    */

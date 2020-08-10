@@ -41,6 +41,12 @@ declare module '@tmuniversal/counter' {
      * @param {Number} amount amount to decrement by (default: 1)
      */
     public decrement(amount?: number): number;
+    
+    /**
+     * Reset the counter
+     * @param {Boolean} toStart wether to reset to the starting value or to 0 (default: true)
+     */
+    public reset (toStart?: boolean): number;
 
     /**
      * last five values of the counter
