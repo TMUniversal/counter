@@ -11,6 +11,8 @@ class Counter {
   private doEmitTargetEvent: boolean;
   private _startValue: number;
   private _eventEmitter: EventEmitter;
+  private _last5: number[];
+  private _lastChange: number;
   /**
    * Create a counter
    * @param {Number} startValue number to start on
@@ -33,6 +35,8 @@ class Counter {
     this._eventEmitter = new EventEmitter()
 
     this.doEmitTargetEvent = true
+    this._last5 = []
+    this._lastChange = 0
     this.value = this._value = startValue || 0
     this._startValue = startValue
   }
@@ -50,7 +54,12 @@ class Counter {
       this.emit('change', newValue, this._value)
     }
 
+    this._lastChange = newValue - this._value
     this._value = newValue
+
+    // Ensure that only 5 elements are saved
+    if (this._last5.length > 4) this._last5.pop()
+    this._last5.unshift(this._value)
 
     if (this.doEmitTargetEvent && this.options.exactMatch && this._value === this.options.target) {
       this.emit('target', this._value)
@@ -68,6 +77,39 @@ class Counter {
    */
   public get startValue (): number {
     return this._startValue
+  }
+
+  /**
+   * Increment the counter by an amount
+   * @param {Number} amount amount to increment by (default: 1)
+   */
+  public increment (amount: number = 1): number {
+    this.value += amount
+    return this.value
+  }
+
+  /**
+   * Decrement the counter by an amount
+   * @param {Number} amount amount to decrement by (default: 1)
+   */
+  public decrement (amount: number = 1): number {
+    return this.increment(-amount)
+  }
+
+  /**
+   * last five values of the counter
+   * @type Number[]
+   */
+  public get last5 (): number[] {
+    return this._last5
+  }
+
+  /**
+   * last change made to the counter (difference)
+   * @type Number
+   */
+  public get lastChange (): number {
+    return this._lastChange
   }
 
   /**

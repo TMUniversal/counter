@@ -2,30 +2,34 @@ const Counter = require('../dist/index')
 
 const testCounter = new Counter(7, { target: 4, exactMatch: false, once: false })
 
-const eventCounter = new Counter(0, { target: 5 })
+const eventCounter = new Counter(0, { target: 9 })
 
 let success = false
 
 eventCounter.once('target', (v) => {
-  if (v === 5) success = true
+  if (v === 9) success = true
   else throw new Error()
 })
 
 testCounter.on('target', (v) => {
-  eventCounter.value++
+  eventCounter.increment()
 })
 
 testCounter.on('change', (n, o) => {
-  eventCounter.value++
+  eventCounter.increment()
 })
 
 testCounter.value = 5
 
-testCounter.value = 3
+testCounter.decrement(2)
 
-testCounter.value = 4
+testCounter.increment()
 
-if (testCounter.value === 4 && success === true) {
+testCounter.decrement()
+
+testCounter.increment()
+
+if (testCounter.value === 4 && success === true && testCounter.lastChange === 1) {
   console.log('test successful.')
   return process.exit(0)
 }

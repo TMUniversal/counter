@@ -67,12 +67,12 @@ testCounter.value = 5
 // These will be listened to and handled as defined above.
 // Note: event listeners must be defined before handling events
 
-testCounter.value = 3
+testCounter.decrement(2)
 // Will also trigger a "change" event, but no target event (since the value does not pass the target).
 // Note: passing the target means that the current value is equal or beyond the target value, as seen from the starting value.
 // This means it can count backwards. I'm sorry for the complicated wording.
 
-testCounter.value = 4
+testCounter.increment()
 // Will trigger a "change" event.
 // Although this would emit a "target" event, since "once" is set to true, only one target event will ever be emitted.
 
