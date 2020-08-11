@@ -14,7 +14,7 @@ declare module '@tmuniversal/counter' {
      * @param {Number} startValue number to start on
      * @param {{target?: Number, once?: Boolean, exactMatch?: Boolean}} options options for the counter
      */
-    constructor(startValue: number, options?: CounterOptions);
+    constructor(startValue?: number, options?: CounterOptions);
 
     /**
      * Current value of the counter
@@ -41,12 +41,12 @@ declare module '@tmuniversal/counter' {
      * @param {Number} amount amount to decrement by (default: 1)
      */
     public decrement(amount?: number): number;
-    
+
     /**
      * Reset the counter
      * @param {Boolean} toStart wether to reset to the starting value or to 0 (default: true)
      */
-    public reset (toStart?: boolean): number;
+    public reset(toStart?: boolean): number;
 
     /**
      * last five values of the counter

@@ -18,7 +18,7 @@ class Counter {
    * @param {Number} startValue number to start on
    * @param {{target?: Number, once?: Boolean, exactMatch?: Boolean}} options options for the counter
    */
-  constructor (startValue: number, options: CounterOptions = {} as CounterOptions) {
+  constructor (startValue: number = 0, options: CounterOptions = {} as CounterOptions) {
     if (typeof startValue !== 'number') throw new Error(`startValue must be a number. received ${typeof startValue}`)
     const {
       target = 0,
