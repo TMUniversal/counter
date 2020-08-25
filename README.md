@@ -127,10 +127,10 @@ Note: Passing the target means that the current value is equal or beyond the tar
 
 ## Credits
 
-This project is heavily inspired by the existing but very old package [counter].
+This project is heavily inspired by the existing but very old package [counter](https://www.npmjs.com/package/counter).
 
 ## License
 
 Please refer to the [LICENSE](LICENSE.md) file.
 
-[counter]: https://www.npmjs.com/package/counter
+[counter]: https://github.com/TMUniversal/counter
