@@ -5,21 +5,34 @@ import { EventEmitter } from 'events'
 
 type CounterEvent = 'change' | 'target'
 
+interface CounterOptions {
+  target: number
+  once: boolean
+  exactMatch: boolean
+}
+
 class Counter {
-  public options: CounterOptions;
-  private _value: number;
-  private doEmitTargetEvent: boolean;
-  private _startValue: number;
-  private _eventEmitter: EventEmitter;
-  private _last5: number[];
-  private _lastChange: number;
+  public options: CounterOptions
+  private _value: number
+  private doEmitTargetEvent: boolean
+  private _startValue: number
+  private _eventEmitter: EventEmitter
+  private _last5: number[]
+  private _lastChange: number
   /**
    * Create a counter
    * @param {Number} startValue number to start on
    * @param {{target?: Number, once?: Boolean, exactMatch?: Boolean}} options options for the counter
    */
-  constructor (startValue: number = 0, options: CounterOptions = {} as CounterOptions) {
-    if (typeof startValue !== 'number') throw new Error(`startValue must be a number. received ${typeof startValue}`)
+  constructor (
+    startValue: number = 0,
+    options: CounterOptions = {} as CounterOptions
+  ) {
+    if (typeof startValue !== 'number') {
+      throw new Error(
+        `startValue must be a number. received ${typeof startValue}`
+      )
+    }
     const {
       target = 0,
       exactMatch = true,
@@ -61,10 +74,19 @@ class Counter {
     if (this._last5.length > 4) this._last5.pop()
     this._last5.unshift(this._value)
 
-    if (this.doEmitTargetEvent && this.options.exactMatch && this._value === this.options.target) {
+    if (
+      this.doEmitTargetEvent &&
+      this.options.exactMatch &&
+      this._value === this.options.target
+    ) {
       this.emit('target', this._value)
       if (this.options.once) this.doEmitTargetEvent = false
-    } else if (this.doEmitTargetEvent && !this.options.exactMatch && ((this.startValue <= this.value && this.value >= this.options.target) || (this.startValue >= this.value && this.value <= this.options.target))) {
+    } else if (
+      this.doEmitTargetEvent &&
+      !this.options.exactMatch &&
+      ((this.startValue <= this.value && this.value >= this.options.target) ||
+        (this.startValue >= this.value && this.value <= this.options.target))
+    ) {
       // If not matching exactly, see if the counter has passed the target on it's way from the starting value
       this.emit('target', this.options.target, this._value)
       if (this.options.once) this.doEmitTargetEvent = false
@@ -152,9 +174,3 @@ class Counter {
 }
 
 module.exports = Counter
-
-interface CounterOptions {
-  target: number;
-  once: boolean;
-  exactMatch: boolean;
-}

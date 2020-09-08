@@ -53,8 +53,11 @@ const testCounter = new Counter(3) // Start at 3
 #### Working with the counter
 
 ```js
-
-const exampleCounter = new Counter(1, { target: 4, exactMatch: false, once: true }) // Or pass some options
+const exampleCounter = new Counter(1, {
+  target: 4,
+  exactMatch: false,
+  once: true
+})
 
 console.log(exampleCounter.value)
 // => 1
@@ -114,7 +117,7 @@ console.log(exampleCounter.last5)
 A counter emits two kinds of events: "change", when the value of the counter changes; "target" when the counter reaches (or passes) the target option.
 
 ```js
-exampleCounter.on('target', (value) => {
+exampleCounter.on('target', value => {
   console.log(`reached ${value}`)
 })
 

@@ -20,3 +20,4 @@ yarn-error.log*
 .github
 CHANGELOG.md
 tsconfig.json
+.prettierrc
