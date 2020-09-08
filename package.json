@@ -1,6 +1,6 @@
 {
   "name": "@tmuniversal/counter",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Counters that are a bit more advanced than a simple variable",
   "main": "dist/index.js",
   "types": "typings/index.d.ts",
