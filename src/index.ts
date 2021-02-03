@@ -13,12 +13,12 @@ interface CounterOptions {
 
 class Counter {
   public options: CounterOptions
+  public readonly last5: number[]
+  public lastChange: number
+  public readonly startValue: number
   private _value: number
   private doEmitTargetEvent: boolean
-  private readonly _startValue: number
   private readonly _eventEmitter: EventEmitter
-  private readonly _last5: number[]
-  private _lastChange: number
   /**
    * Create a counter
    * @param {Number} startValue number to start on
@@ -39,15 +39,15 @@ class Counter {
     this._eventEmitter = new EventEmitter()
 
     this.doEmitTargetEvent = true
-    this._last5 = []
-    this._lastChange = 0
+    this.last5 = []
+    this.lastChange = 0
     this.value = this._value = startValue || 0
-    this._startValue = startValue
+    this.startValue = startValue
   }
 
   /**
    * Current value of the counter
-   * @type Number
+   * @type {Number}
    */
   public get value (): number {
     return this._value
@@ -58,12 +58,12 @@ class Counter {
       this.emit('change', newValue, this._value)
     }
 
-    this._lastChange = newValue - this._value
+    this.lastChange = newValue - this._value
     this._value = newValue
 
     // Ensure that only 5 elements are saved
-    if (this._last5.length > 4) this._last5.pop()
-    this._last5.unshift(this._value)
+    if (this.last5.length > 4) this.last5.shift()
+    this.last5.push(this._value)
 
     if (this.doEmitTargetEvent && this.options.exactMatch && this._value === this.options.target) {
       this.emit('target', this._value)
@@ -82,16 +82,9 @@ class Counter {
   }
 
   /**
-   * The starting value
-   * @type Number
-   */
-  public get startValue (): number {
-    return this._startValue
-  }
-
-  /**
    * Increment the counter by an amount
    * @param {Number} amount amount to increment by (default: 1)
+   * @returns {Number} new value
    */
   public increment (amount: number = 1): number {
     this.value += amount
@@ -101,6 +94,7 @@ class Counter {
   /**
    * Decrement the counter by an amount
    * @param {Number} amount amount to decrement by (default: 1)
+   * @returns {Number} new value
    */
   public decrement (amount: number = 1): number {
     return this.increment(-amount)
@@ -109,10 +103,11 @@ class Counter {
   /**
    * Reset the counter
    * @param {Boolean} toStart wether to reset to the starting value or to 0 (default: true)
+   * @returns {Number} new value
    */
   public reset (toStart: boolean = true): number {
     if (toStart) {
-      return (this.value = this._startValue)
+      return (this.value = this.startValue)
     }
     else {
       return (this.value = 0)
@@ -120,21 +115,10 @@ class Counter {
   }
 
   /**
-   * last five values of the counter
-   * @type Number[]
+   * Value of the counter as a string
+   * Will be used in template literals
+   * @type {String}
    */
-  public get last5 (): number[] {
-    return this._last5
-  }
-
-  /**
-   * last change made to the counter (difference)
-   * @type Number
-   */
-  public get lastChange (): number {
-    return this._lastChange
-  }
-
   public toString (): string {
     return this.value.toString()
   }
