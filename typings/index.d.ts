@@ -3,12 +3,12 @@ declare module '@tmuniversal/counter' {
 
   class Counter {
     public options: CounterOptions
+    public readonly last5: number[]
+    public lastChange: number
+    public readonly startValue: number
     private _value: number
-    private ready: boolean
-    private _startValue: number
-    private _eventEmitter: EventEmitter
-    private _last5: number[]
-    private _lastChange: number
+    private doEmitTargetEvent: boolean
+    private readonly _eventEmitter: EventEmitter
     /**
      * Create a counter
      * @param {Number} startValue number to start on
@@ -18,48 +18,38 @@ declare module '@tmuniversal/counter' {
 
     /**
      * Current value of the counter
-     * @type Number
+     * @type {Number}
      */
     public get value(): number
 
     public set value(newValue: number)
 
     /**
-     * The starting value
-     * @type Number
-     */
-    public get startValue(): number
-
-    /**
      * Increment the counter by an amount
      * @param {Number} amount amount to increment by (default: 1)
+     * @returns {Number} new value
      */
     public increment(amount?: number): number
 
     /**
      * Decrement the counter by an amount
      * @param {Number} amount amount to decrement by (default: 1)
+     * @returns {Number} new value
      */
     public decrement(amount?: number): number
 
     /**
      * Reset the counter
      * @param {Boolean} toStart wether to reset to the starting value or to 0 (default: true)
+     * @returns {Number} new value
      */
     public reset(toStart?: boolean): number
 
     /**
-     * last five values of the counter
-     * @type Number[]
+     * Value of the counter as a string
+     * Will be used in template literals
+     * @type {String}
      */
-    public get last5(): number[]
-
-    /**
-     * last change made to the counter (difference)
-     * @type Number
-     */
-    public get lastChange(): number
-
     public toString(): string
 
     /**

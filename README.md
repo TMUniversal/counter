@@ -95,21 +95,21 @@ console.log(exampleCounter.lastChange)
 // => -2
 ```
 
-The last five values of the counter are saved in an array, ordered from last to first. The current value is saved as the first element of the array.
+The last five values of the counter are saved in an array, ordered from first to last. The current value is saved as the last element of the array.
 
 ```js
 console.log(exampleCounter.last5)
-// => [ 2, 4, 3, 5 ]
+// => [ 5, 3, 4, 2 ]
 
 exampleCounter.increment()
 
 console.log(exampleCounter.last5)
-// => [ 3, 2, 4, 3, 5 ]
+// => [ 5, 3, 4, 2, 3 ]
 
 exampleCounter.increment()
 
 console.log(exampleCounter.last5)
-// => [ 4, 3, 2, 4, 3 ]
+// => [ 3, 4, 2, 3, 4 ]
 ```
 
 #### Events
