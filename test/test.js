@@ -68,7 +68,9 @@ describe('counter events', () => {
     const ec = new Counter(0, { target: 1 })
     let i = 0
     ec.on('target', () => i++)
-    console.table([ec.increment(), ec.decrement(), ec.increment()])
+    ec.increment()
+    ec.decrement()
+    ec.increment()
     expect(i).toBe(2)
   })
   test('target event should trigger only once when target is reached with once = true option', () => {
