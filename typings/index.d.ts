@@ -67,20 +67,14 @@ declare module '@tmuniversal/counter' {
      * @param {"change" | "target"} event name of the event
      * @param {Function} listener function to call when the event occurs
      */
-    public on(
-      event: CounterEvent,
-      listener: (...args: any[]) => void
-    ): EventEmitter
+    public on(event: CounterEvent, listener: (...args: any[]) => void): EventEmitter
 
     /**
      * Listen for an event once.
      * @param {"change" | "target"} event name of the event
      * @param {Function} listener function to call when the event occurs
      */
-    public once(
-      event: CounterEvent,
-      listener: (...args: any[]) => void
-    ): EventEmitter
+    public once(event: CounterEvent, listener: (...args: any[]) => void): EventEmitter
 
     private emit(event: CounterEvent, ...args: any[]): EventEmitter
   }

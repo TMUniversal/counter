@@ -33,11 +33,7 @@ testCounter.decrement()
 
 testCounter.increment()
 
-if (
-  testCounter.value === 4 &&
-  success === true &&
-  testCounter.lastChange === 1
-) {
+if (testCounter.value === 4 && success === true && testCounter.lastChange === 1) {
   console.log('test successful.')
   return process.exit(0)
 }

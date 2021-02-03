@@ -15,29 +15,20 @@ class Counter {
   public options: CounterOptions
   private _value: number
   private doEmitTargetEvent: boolean
-  private _startValue: number
-  private _eventEmitter: EventEmitter
-  private _last5: number[]
+  private readonly _startValue: number
+  private readonly _eventEmitter: EventEmitter
+  private readonly _last5: number[]
   private _lastChange: number
   /**
    * Create a counter
    * @param {Number} startValue number to start on
    * @param {{target?: Number, once?: Boolean, exactMatch?: Boolean}} options options for the counter
    */
-  constructor (
-    startValue: number = 0,
-    options: CounterOptions = {} as CounterOptions
-  ) {
+  constructor (startValue: number = 0, options: CounterOptions = {} as CounterOptions) {
     if (typeof startValue !== 'number') {
-      throw new Error(
-        `startValue must be a number. received ${typeof startValue}`
-      )
+      throw new Error(`startValue must be a number. received ${typeof startValue}`)
     }
-    const {
-      target = 0,
-      exactMatch = true,
-      once = false
-    } = options as CounterOptions
+    const { target = 0, exactMatch = true, once = false } = options
 
     this.options = {
       target: target,
@@ -74,14 +65,11 @@ class Counter {
     if (this._last5.length > 4) this._last5.pop()
     this._last5.unshift(this._value)
 
-    if (
-      this.doEmitTargetEvent &&
-      this.options.exactMatch &&
-      this._value === this.options.target
-    ) {
+    if (this.doEmitTargetEvent && this.options.exactMatch && this._value === this.options.target) {
       this.emit('target', this._value)
       if (this.options.once) this.doEmitTargetEvent = false
-    } else if (
+    }
+    else if (
       this.doEmitTargetEvent &&
       !this.options.exactMatch &&
       ((this.startValue <= this.value && this.value >= this.options.target) ||
@@ -125,7 +113,8 @@ class Counter {
   public reset (toStart: boolean = true): number {
     if (toStart) {
       return (this.value = this._startValue)
-    } else {
+    }
+    else {
       return (this.value = 0)
     }
   }
@@ -155,7 +144,7 @@ class Counter {
    * @param {"change" | "target"} event name of the event
    * @param {Function} listener function to call when the event occurs
    */
-  public on (event: CounterEvent, listener: (...args: any[]) => void) {
+  public on (event: CounterEvent, listener: (...args: any[]) => void): EventEmitter {
     return this._eventEmitter.on(event, listener)
   }
 
@@ -164,11 +153,11 @@ class Counter {
    * @param {"change" | "target"} event name of the event
    * @param {Function} listener function to call when the event occurs
    */
-  public once (event: CounterEvent, listener: (...args: any[]) => void) {
+  public once (event: CounterEvent, listener: (...args: any[]) => void): EventEmitter {
     return this._eventEmitter.once(event, listener)
   }
 
-  private emit (event: CounterEvent, ...args: any[]) {
+  private emit (event: CounterEvent, ...args: any[]): boolean {
     return this._eventEmitter.emit(event, ...args)
   }
 }
